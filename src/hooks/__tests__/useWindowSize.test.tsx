@@ -15,16 +15,6 @@ describe('useWindowSize tests', () => {
 
         expect(result.current.width).toBe(500);
         expect(result.current.height).toBe(800);
-
-        act(() => {
-            customGlobal.innerWidth = 1000;
-            customGlobal.innerHeight = 1000;
-
-            fireEvent(customGlobal, new Event('resize'));
-        });
-
-        expect(result.current.width).toBe(1000);
-        expect(result.current.height).toBe(1000);
     });
 
     it('window size changes after resize', () => {
