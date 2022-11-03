@@ -1,10 +1,5 @@
 import { useState } from 'react';
 
-/**
- *
- * This needs tests
- */
-
 const useBooleanState = (initialState?: boolean) => {
     const [booleanState, setBooleanState] = useState(initialState ?? false);
 
