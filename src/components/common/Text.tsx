@@ -4,11 +4,12 @@ import useSmallWindow from '../../hooks/useSmallWindow';
 
 interface ITextProps {
     children: string;
+    textAlign?: 'left' | 'center' | 'right';
     style?: CSSProperties;
     variant?: 'h1' | 'h2' | 'h3';
 }
 
-const Text = ({ children, style, variant }: ITextProps) => {
+const Text = ({ children, textAlign, style, variant }: ITextProps) => {
     const { isSmallWindow } = useSmallWindow(768);
 
     const preDefinedStyle: { [key: string]: CSSProperties } = {
@@ -20,6 +21,7 @@ const Text = ({ children, style, variant }: ITextProps) => {
 
     return (
         <Typography
+            textAlign={textAlign || 'left'}
             variant={variant || 'body1'}
             style={{ ...preDefinedStyle[variant || 'body'], ...style }}>
             {children}

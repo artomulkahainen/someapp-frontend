@@ -1,6 +1,7 @@
 import GVButton from '../components/common/GVButton';
 import GVTextField from '../components/common/GVTextField';
 import Text from '../components/common/Text';
+import RegisterDialog from '../components/LoginView/RegisterDialog';
 import useBooleanState from '../hooks/useBooleanState';
 import { centeredFlexColumn } from '../utils/flexItems';
 
@@ -31,7 +32,10 @@ const LoginView = ({ setLoggedIn }: ILoginViewProps) => {
                 style={{ marginTop: '5em' }}>
                 Register
             </GVButton>
-            {showRegisterDialog && <p>showing register dialog</p>}
+            <RegisterDialog
+                onClose={toggleRegisterDialog}
+                open={showRegisterDialog}
+            />
         </div>
     );
 };
