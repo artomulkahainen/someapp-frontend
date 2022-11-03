@@ -12,5 +12,6 @@ export const saveNewUser = async (
         });
     } catch (e) {
         console.error(e);
+        throw new Error((e as Error).message);
     }
 };
