@@ -1,22 +1,33 @@
-import { Button } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { CSSProperties } from 'react';
 
 interface IGVButtonProps {
     children: string | JSX.Element;
+    loading?: boolean;
     onClick?: () => void;
     style?: CSSProperties;
-    type?: 'primary' | 'secondary';
+    colorType?: 'primary' | 'secondary';
+    type?: 'submit';
 }
 
-const GVButton = ({ children, onClick, style, type }: IGVButtonProps) => {
+const GVButton = ({
+    children,
+    loading,
+    onClick,
+    style,
+    colorType,
+    type,
+}: IGVButtonProps) => {
     return (
-        <Button
-            color={type || 'primary'}
+        <LoadingButton
+            color={colorType || 'primary'}
+            loading={loading ?? false}
             onClick={onClick}
             variant="contained"
-            style={{ ...style }}>
+            style={{ ...style }}
+            type={type || 'button'}>
             {children}
-        </Button>
+        </LoadingButton>
     );
 };
 
