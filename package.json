@@ -56,5 +56,8 @@
     "@typescript-eslint/parser": "^5.42.0",
     "eslint": "^8.26.0",
     "prettier": "2.7.1"
+  },
+  "jest": {
+    "transformIgnorePatterns": ["node_modules\/(?!axios)"]
   }
 }
