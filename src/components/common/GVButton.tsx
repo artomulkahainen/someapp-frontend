@@ -1,33 +1,42 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { CSSProperties } from 'react';
+import styled from 'styled-components';
 
 interface IGVButtonProps {
     children: string | JSX.Element;
+    className?: string;
     loading?: boolean;
     onClick?: () => void;
     style?: CSSProperties;
-    colorType?: 'primary' | 'secondary';
+    primary?: boolean;
     type?: 'submit';
 }
 
+const Button = styled(LoadingButton)<{ primary?: boolean }>`
+    background-color: ${(p) => (p.primary ? 'red' : '#EEEEEE')} !important;
+    color: ${(p) => (p.primary ? 'white' : 'black')} !important;
+`;
+
 const GVButton = ({
     children,
+    className,
     loading,
     onClick,
     style,
-    colorType,
+    primary,
     type,
 }: IGVButtonProps) => {
     return (
-        <LoadingButton
-            color={colorType || 'primary'}
+        <Button
+            className={className}
+            primary={primary}
             loading={loading ?? false}
             onClick={onClick}
             variant="contained"
             style={{ ...style }}
             type={type || 'button'}>
             {children}
-        </LoadingButton>
+        </Button>
     );
 };
 

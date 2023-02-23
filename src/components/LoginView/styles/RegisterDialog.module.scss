@@ -1,0 +1,22 @@
+@import '../../../utils/styles/flexItems.scss';
+
+.dialogDiv {
+    @extend .centeredFlexColumn;
+    padding: 5em;
+
+    @media (max-width: 768px) {
+        padding: 3em;
+    }
+
+    @media (max-width: 500px) {
+        padding: 1em;
+    }
+}
+
+.dialogHeaderDiv {
+    @extend .centeredFlexRow;
+}
+
+.dialogHeaderText {
+    width: 80%;
+}

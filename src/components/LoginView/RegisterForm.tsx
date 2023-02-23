@@ -1,10 +1,11 @@
+import { Form, Formik } from 'formik';
+import * as Yup from 'yup';
 import useBooleanState from '../../hooks/useBooleanState';
 import { saveNewUser } from '../../services/userService';
+import FormError from '../common/FormError';
 import GVButton from '../common/GVButton';
 import GVTextField from '../common/GVTextField';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import styled from 'styled-components';
+import styles from './styles/LoginView.module.scss';
 
 const RegisterSchema = Yup.object().shape({
     username: Yup.string()
@@ -17,43 +18,39 @@ const RegisterSchema = Yup.object().shape({
         .required('Password is required'),
 });
 
-const StyledError = styled.p`
-    font-size: 0.7em;
-    color: red;
-`;
-
 interface IRegisterFormProps {
     handleClose: () => void;
+}
+
+interface IFormValues {
+    username: string;
+    password: string;
 }
 
 const RegisterForm = ({ handleClose }: IRegisterFormProps) => {
     const [loading, toggleLoading] = useBooleanState();
 
+    const initialValues = { username: '', password: '' };
+
+    const onSubmit = async (values: IFormValues) => {
+        toggleLoading();
+        try {
+            await saveNewUser(values.username, values.password);
+        } catch (e) {
+            console.error((e as Error).message);
+        } finally {
+            toggleLoading();
+            handleClose();
+        }
+    };
+
     return (
         <Formik
-            initialValues={{
-                username: '',
-                password: '',
-            }}
+            initialValues={initialValues}
             validationSchema={RegisterSchema}
-            onSubmit={async (values) => {
-                toggleLoading();
-                try {
-                    await saveNewUser(values.username, values.password);
-                } catch (e) {
-                    console.error((e as Error).message);
-                } finally {
-                    toggleLoading();
-                    handleClose();
-                }
-            }}>
+            onSubmit={onSubmit}>
             {({ errors, touched, values, handleChange }) => (
-                <Form
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}>
+                <Form className={styles.formDiv}>
                     <GVTextField
                         name="username"
                         label="Username"
@@ -61,7 +58,7 @@ const RegisterForm = ({ handleClose }: IRegisterFormProps) => {
                         value={values.username}
                     />
                     {errors.username && touched.username && (
-                        <StyledError>{errors.username}</StyledError>
+                        <FormError>{errors.username}</FormError>
                     )}
                     <GVTextField
                         name="password"
@@ -71,10 +68,11 @@ const RegisterForm = ({ handleClose }: IRegisterFormProps) => {
                         value={values.password}
                     />
                     {errors.password && touched.password && (
-                        <StyledError>{errors.password}</StyledError>
+                        <FormError>{errors.password}</FormError>
                     )}
                     <GVButton
-                        style={{ margin: '1em 0em' }}
+                        primary
+                        className={styles.loginButton}
                         loading={loading}
                         type="submit">
                         Register

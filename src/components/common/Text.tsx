@@ -1,31 +1,44 @@
-import { Typography } from '@mui/material';
 import { CSSProperties } from 'react';
-import useSmallWindow from '../../hooks/useSmallWindow';
 
 interface ITextProps {
     children: string;
-    textAlign?: 'left' | 'center' | 'right';
+    className?: string;
+    strong?: boolean;
     style?: CSSProperties;
     variant?: 'h1' | 'h2' | 'h3';
 }
 
-const Text = ({ children, textAlign, style, variant }: ITextProps) => {
-    const { isSmallWindow } = useSmallWindow(768);
+const Text = ({ children, className, strong, style, variant }: ITextProps) => {
+    const childrenToRender = strong ? <strong>{children}</strong> : children;
 
-    const preDefinedStyle: { [key: string]: CSSProperties } = {
-        h1: { fontSize: !isSmallWindow ? '2em' : '1.5em' },
-        h2: { fontSize: !isSmallWindow ? '1.5em' : '1.2em' },
-        h3: { fontSize: !isSmallWindow ? '1.3em' : '1.1em' },
-        body: { fontSize: '1em' },
-    };
+    if (variant === 'h1') {
+        return (
+            <h1 className={className} style={{ ...style }}>
+                {childrenToRender}
+            </h1>
+        );
+    }
+
+    if (variant === 'h2') {
+        return (
+            <h2 className={className} style={{ ...style }}>
+                {childrenToRender}
+            </h2>
+        );
+    }
+
+    if (variant === 'h3') {
+        return (
+            <h3 className={className} style={{ ...style }}>
+                {childrenToRender}
+            </h3>
+        );
+    }
 
     return (
-        <Typography
-            textAlign={textAlign || 'left'}
-            variant={variant || 'body1'}
-            style={{ ...preDefinedStyle[variant || 'body'], ...style }}>
-            {children}
-        </Typography>
+        <p className={className} style={{ ...style }}>
+            {childrenToRender}
+        </p>
     );
 };
 
