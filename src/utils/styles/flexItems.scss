@@ -1,0 +1,10 @@
+.centeredFlexColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.centeredFlexRow {
+    display: flex;
+    justify-content: center;
+}

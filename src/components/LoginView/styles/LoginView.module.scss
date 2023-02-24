@@ -1,0 +1,42 @@
+@import '../../../utils/styles/colors.scss';
+@import '../../../utils/styles/flexItems.scss';
+
+.loginViewDiv {
+    @extend .centeredFlexColumn;
+    justify-content: center;
+    height: 100vh;
+}
+
+.headerText {
+    color: $mainRed;
+    margin-bottom: 1em;
+}
+
+.loginButton {
+    margin: 1em 0em !important;
+}
+
+.registerButton {
+    margin-top: 5em !important;
+}
+
+.formDiv {
+    @extend .centeredFlexColumn;
+}
+
+.dialogDiv {
+    @extend .centeredFlexColumn;
+    padding: 5em;
+
+    @media (max-width: 768px) {
+        padding: 3em;
+    }
+
+    @media (max-width: 500px) {
+        padding: 1em;
+    }
+}
+
+.dialogHeaderDiv {
+    @extend .centeredFlexRow;
+}
