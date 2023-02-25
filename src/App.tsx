@@ -1,13 +1,10 @@
-import { useState } from 'react';
-import AppView from './views/AppView';
-import LoginView from './views/LoginView';
+import useBooleanState from './hooks/useBooleanState';
+import Router from './Router';
 
 const App = () => {
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [loggedIn, toggleLoggedIn] = useBooleanState();
 
-    const toggleLogin = () => setLoggedIn(!loggedIn);
-
-    return loggedIn ? <AppView /> : <LoginView setLoggedIn={toggleLogin} />;
+    return <Router loggedIn={loggedIn} toggleLoggedIn={toggleLoggedIn} />;
 };
 
 export default App;

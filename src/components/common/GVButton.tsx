@@ -1,6 +1,7 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { CSSProperties } from 'react';
 import styled from 'styled-components';
+import { Colors } from '../../utils/styles/colors';
 
 interface IGVButtonProps {
     children: string | JSX.Element;
@@ -8,13 +9,14 @@ interface IGVButtonProps {
     loading?: boolean;
     onClick?: () => void;
     style?: CSSProperties;
-    primary?: boolean;
+    primary?: true;
     type?: 'submit';
 }
 
-const Button = styled(LoadingButton)<{ primary?: boolean }>`
-    background-color: ${(p) => (p.primary ? 'red' : '#EEEEEE')} !important;
-    color: ${(p) => (p.primary ? 'white' : 'black')} !important;
+const Button = styled(LoadingButton)<{ $primary?: boolean }>`
+    background-color: ${(p) =>
+        p.$primary ? Colors.mainRed : '#EEEEEE'} !important;
+    color: ${(p) => (p.$primary ? 'white' : 'black')} !important;
 `;
 
 const GVButton = ({
@@ -29,7 +31,7 @@ const GVButton = ({
     return (
         <Button
             className={className}
-            primary={primary}
+            $primary={primary}
             loading={loading ?? false}
             onClick={onClick}
             variant="contained"
