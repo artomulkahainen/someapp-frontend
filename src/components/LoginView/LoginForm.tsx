@@ -1,24 +1,20 @@
 import { Form, Formik } from 'formik';
-import useAuthentication from '../../hooks/common/useAuthentication';
+import useLoginView from '../../hooks/common/useAuthentication';
 import FormError from '../common/FormError';
 import GVButton from '../common/GVButton';
 import GVTextField from '../common/GVTextField';
 import { ILoginViewFormValues } from './loginView.interfaces';
 import styles from './styles/LoginView.module.scss';
 
-interface IRegisterFormProps {
-    handleClose: () => void;
-}
-
-const RegisterForm = ({ handleClose }: IRegisterFormProps) => {
-    const { initialFormValues, loading, onRegister, userNamePasswordSchema } =
-        useAuthentication();
+const LoginForm = ({ toggleLoggedIn }: { toggleLoggedIn: () => void }) => {
+    const { initialFormValues, loading, onLogin, userNamePasswordSchema } =
+        useLoginView(toggleLoggedIn);
 
     const onSubmit = async (values: ILoginViewFormValues) => {
         try {
-            await onRegister(values.username, values.password);
-        } finally {
-            handleClose();
+            await onLogin(values);
+        } catch (e) {
+            console.error(e);
         }
     };
 
@@ -53,7 +49,7 @@ const RegisterForm = ({ handleClose }: IRegisterFormProps) => {
                         className={styles.loginButton}
                         loading={loading}
                         type="submit">
-                        Register
+                        Login
                     </GVButton>
                 </Form>
             )}
@@ -61,4 +57,4 @@ const RegisterForm = ({ handleClose }: IRegisterFormProps) => {
     );
 };
 
-export default RegisterForm;
+export default LoginForm;

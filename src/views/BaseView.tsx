@@ -1,7 +1,7 @@
 import Navigator from '../components/common/Navigator';
 
 interface IBaseViewProps {
-    children: JSX.Element;
+    children: JSX.Element | JSX.Element[];
 }
 
 const BaseView = ({ children }: IBaseViewProps) => {

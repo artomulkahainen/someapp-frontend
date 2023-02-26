@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import useSmallWindow from '../useSmallWindow';
+import useSmallWindow from '../common/useSmallWindow';
 
 const customGlobal = global as any;
 

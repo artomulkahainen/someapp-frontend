@@ -1,6 +1,6 @@
 import { fireEvent, renderHook } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import useWindowSize from '../useWindowSize';
+import useWindowSize from '../common/useWindowSize';
 
 const customGlobal = global as any;
 
