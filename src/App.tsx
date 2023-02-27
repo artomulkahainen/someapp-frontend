@@ -1,4 +1,4 @@
-import useBooleanState from './hooks/useBooleanState';
+import useBooleanState from './hooks/common/useBooleanState';
 import Router from './Router';
 
 const App = () => {

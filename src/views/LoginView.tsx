@@ -1,15 +1,15 @@
 import GVButton from '../components/common/GVButton';
-import GVTextField from '../components/common/GVTextField';
 import Text from '../components/common/Text';
+import LoginForm from '../components/LoginView/LoginForm';
 import RegisterDialog from '../components/LoginView/RegisterDialog';
-import useBooleanState from '../hooks/useBooleanState';
 import styles from '../components/LoginView/styles/LoginView.module.scss';
+import useBooleanState from '../hooks/common/useBooleanState';
 
 interface ILoginViewProps {
-    setLoggedIn: () => void;
+    toggleLoggedIn: () => void;
 }
 
-const LoginView = ({ setLoggedIn }: ILoginViewProps) => {
+const LoginView = ({ toggleLoggedIn }: ILoginViewProps) => {
     const [showRegisterDialog, toggleRegisterDialog] = useBooleanState();
 
     return (
@@ -17,14 +17,7 @@ const LoginView = ({ setLoggedIn }: ILoginViewProps) => {
             <Text variant="h1" className={styles.headerText}>
                 GimmeVibe
             </Text>
-            <GVTextField label="Username" />
-            <GVTextField label="Password" type="password" />
-            <GVButton
-                primary
-                onClick={setLoggedIn}
-                className={styles.loginButton}>
-                Login
-            </GVButton>
+            <LoginForm toggleLoggedIn={toggleLoggedIn} />
             <GVButton
                 onClick={toggleRegisterDialog}
                 className={styles.registerButton}>

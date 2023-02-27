@@ -1,6 +1,6 @@
 import { fireEvent, renderHook } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import useBooleanState from '../useBooleanState';
+import useBooleanState from '../common/useBooleanState';
 
 describe('useBooleanState tests', () => {
     it('without param', () => {

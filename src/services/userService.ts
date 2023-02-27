@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { LoginRequest } from './api';
+import { JWTResponse } from './api/JWTResponse';
 import { baseApi } from './serviceConfig';
 
 export const saveNewUser = async (
@@ -11,7 +13,16 @@ export const saveNewUser = async (
             password,
         });
     } catch (e) {
-        console.error(e);
+        throw new Error((e as Error).message);
+    }
+};
+
+export const loginUser = async (
+    loginRequest: LoginRequest,
+): Promise<JWTResponse> => {
+    try {
+        return await axios.post(`${baseApi}/loginByUsingPOST`, loginRequest);
+    } catch (e) {
         throw new Error((e as Error).message);
     }
 };
