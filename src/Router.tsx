@@ -1,24 +1,22 @@
+import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { selectLoggedInUser } from './store/userDataSelector';
 import { RoutePaths } from './utils/enums';
 import FeedView from './views/FeedView';
 import LoginView from './views/LoginView';
 import ProfileView from './views/ProfileView';
 import SettingsView from './views/SettingsView';
 
-const Router = ({
-    loggedIn,
-    toggleLoggedIn,
-}: {
-    loggedIn: boolean;
-    toggleLoggedIn: () => void;
-}) => {
+const Router = () => {
+    const { loggedIn } = useSelector(selectLoggedInUser);
+
     return (
         <Routes>
             <Route
                 path={RoutePaths.LOGIN}
                 element={
                     !loggedIn ? (
-                        <LoginView toggleLoggedIn={toggleLoggedIn} />
+                        <LoginView />
                     ) : (
                         <Navigate to={RoutePaths.FEED} />
                     )
@@ -27,11 +25,7 @@ const Router = ({
             <Route
                 path={RoutePaths.FEED}
                 element={
-                    loggedIn ? (
-                        <FeedView toggleLoggedIn={toggleLoggedIn} />
-                    ) : (
-                        <Navigate to={RoutePaths.LOGIN} />
-                    )
+                    loggedIn ? <FeedView /> : <Navigate to={RoutePaths.LOGIN} />
                 }
             />
             <Route

@@ -17,5 +17,4 @@ export interface UserDTO {
     posts?: PostDTO[];
     likedPostsIds?: PostLikeDTO[];
     relationships?: RelationshipDTO[];
-    likedPosts?: PostLikeDTO[];
 }

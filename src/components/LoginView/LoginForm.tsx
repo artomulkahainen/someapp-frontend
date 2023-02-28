@@ -6,9 +6,9 @@ import GVTextField from '../common/GVTextField';
 import { ILoginViewFormValues } from './loginView.interfaces';
 import styles from './styles/LoginView.module.scss';
 
-const LoginForm = ({ toggleLoggedIn }: { toggleLoggedIn: () => void }) => {
+const LoginForm = () => {
     const { initialFormValues, loading, onLogin, userNamePasswordSchema } =
-        useLoginView(toggleLoggedIn);
+        useLoginView();
 
     const onSubmit = async (values: ILoginViewFormValues) => {
         try {
