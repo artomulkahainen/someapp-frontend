@@ -1,3 +1,3 @@
-import { IRootState } from './store';
+import { RootState } from './store';
 
-export const selectLoggedInUser = (state: IRootState) => state.userData.user;
+export const selectLoggedInUser = (state: RootState) => state.userData.user;

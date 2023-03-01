@@ -2,15 +2,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import logger from 'redux-logger';
-import { IUserDataState } from './storeStates.interfaces';
 
 import userDataReducer from './userDataSlice';
 
-export interface IRootState {
-    userData: IUserDataState;
-}
-
-const reducer = combineReducers<IRootState>({
+const reducer = combineReducers({
     userData: userDataReducer,
 });
 
@@ -20,4 +15,5 @@ export const store = configureStore({
     devTools: process.env.NODE_ENV !== 'production',
 });
 
+export type RootState = ReturnType<typeof reducer>;
 export type AppDispatch = typeof store.dispatch;
