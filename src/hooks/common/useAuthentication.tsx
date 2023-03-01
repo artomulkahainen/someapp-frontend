@@ -1,16 +1,17 @@
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { ILoginViewFormValues } from '../../components/LoginView/loginView.interfaces';
 import { loginUser, saveNewUser } from '../../services/userService';
-import { RoutePaths } from '../../utils/enums';
+import { AppDispatch } from '../../store/store';
+import { clearUserData, getOwnUserDataThunk } from '../../store/userDataSlice';
 import useApiCall from './useApiCall';
 import useBooleanState from './useBooleanState';
 import useSessionStorage from './useSessionStorage';
 
-const useAuthentication = (toggleLoggedIn?: () => void) => {
+const useAuthentication = () => {
     const { setItem, removeItem } = useSessionStorage();
     const { callWithParam, callWithTwoParams } = useApiCall();
-    const navigate = useNavigate();
+    const dispatch: AppDispatch = useDispatch();
 
     const [loading, toggleLoading] = useBooleanState();
 
@@ -44,22 +45,22 @@ const useAuthentication = (toggleLoggedIn?: () => void) => {
                 password: values.password,
             });
             setItem('token', response.token);
-            // TODO: fetch own user details and set them to redux
+            // dispatch own user data to redux
+            await dispatch(getOwnUserDataThunk());
             toggleLoading();
-            toggleLoggedIn && toggleLoggedIn();
-
-            navigate(RoutePaths.FEED);
         } catch (e) {
             console.error(e);
             toggleLoading();
         }
     };
 
+    const destroyReduxStore = () => {
+        dispatch(clearUserData());
+    };
+
     const onLogout = () => {
-        // TODO: destroy redux store
         removeItem('token');
-        toggleLoggedIn && toggleLoggedIn();
-        navigate(RoutePaths.LOGIN);
+        destroyReduxStore();
     };
 
     return {

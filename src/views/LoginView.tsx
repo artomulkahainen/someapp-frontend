@@ -5,11 +5,7 @@ import RegisterDialog from '../components/LoginView/RegisterDialog';
 import styles from '../components/LoginView/styles/LoginView.module.scss';
 import useBooleanState from '../hooks/common/useBooleanState';
 
-interface ILoginViewProps {
-    toggleLoggedIn: () => void;
-}
-
-const LoginView = ({ toggleLoggedIn }: ILoginViewProps) => {
+const LoginView = () => {
     const [showRegisterDialog, toggleRegisterDialog] = useBooleanState();
 
     return (
@@ -17,7 +13,7 @@ const LoginView = ({ toggleLoggedIn }: ILoginViewProps) => {
             <Text variant="h1" className={styles.headerText}>
                 GimmeVibe
             </Text>
-            <LoginForm toggleLoggedIn={toggleLoggedIn} />
+            <LoginForm />
             <GVButton
                 onClick={toggleRegisterDialog}
                 className={styles.registerButton}>

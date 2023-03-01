@@ -1,14 +1,10 @@
-import axios from 'axios';
-import { LoginRequest } from './api';
+import { LoginRequest, UserDTO } from './api';
 import { JWTResponse } from './api/JWTResponse';
-import { baseApi } from './serviceConfig';
+import { get, post } from './serviceFunctions';
 
-export const saveNewUser = async (
-    username: string,
-    password: string,
-): Promise<void> => {
+export const saveNewUser = async (username: string, password: string) => {
     try {
-        await axios.post(`${baseApi}/saveNewUserByUsingPOST`, {
+        await post(`/saveNewUserByUsingPOST`, {
             username,
             password,
         });
@@ -17,11 +13,20 @@ export const saveNewUser = async (
     }
 };
 
-export const loginUser = async (
-    loginRequest: LoginRequest,
-): Promise<JWTResponse> => {
+export const loginUser = async (loginRequest: LoginRequest) => {
     try {
-        return await axios.post(`${baseApi}/loginByUsingPOST`, loginRequest);
+        return await post<JWTResponse, LoginRequest>(
+            `/loginByUsingPOST`,
+            loginRequest,
+        );
+    } catch (e) {
+        throw new Error((e as Error).message);
+    }
+};
+
+export const getOwnUserData = async () => {
+    try {
+        return await get<UserDTO>(`/findOwnUserDetailsByUsingGET`);
     } catch (e) {
         throw new Error((e as Error).message);
     }
