@@ -9,7 +9,8 @@
 export interface PostCommentDTO {
     uuid: string;
     createdDate?: string;
-    postComment?: string;
-    postId?: string;
-    userId?: string;
+    postComment: string;
+    postId: string;
+    userId: string;
+    username: string;
 }

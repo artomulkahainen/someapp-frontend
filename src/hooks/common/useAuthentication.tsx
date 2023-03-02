@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { ILoginViewFormValues } from '../../components/LoginView/loginView.interfaces';
@@ -5,7 +6,6 @@ import { loginUser, saveNewUser } from '../../services/userService';
 import { AppDispatch } from '../../store/store';
 import { clearUserData, getOwnUserDataThunk } from '../../store/userDataSlice';
 import useApiCall from './useApiCall';
-import useBooleanState from './useBooleanState';
 import useSessionStorage from './useSessionStorage';
 
 const useAuthentication = () => {
@@ -13,7 +13,7 @@ const useAuthentication = () => {
     const { callWithParam, callWithTwoParams } = useApiCall();
     const dispatch: AppDispatch = useDispatch();
 
-    const [loading, toggleLoading] = useBooleanState();
+    const [loading, setLoading] = useState(false);
 
     const initialFormValues = { username: '', password: '' };
 
@@ -29,16 +29,16 @@ const useAuthentication = () => {
     });
 
     const onRegister = async (username: string, password: string) => {
-        toggleLoading();
+        setLoading(true);
         try {
             await callWithTwoParams(saveNewUser, username, password);
         } finally {
-            toggleLoading();
+            setLoading(false);
         }
     };
 
     const onLogin = async (values: ILoginViewFormValues) => {
-        toggleLoading();
+        setLoading(true);
         try {
             const response = await callWithParam(loginUser, {
                 username: values.username,
@@ -47,10 +47,8 @@ const useAuthentication = () => {
             setItem('token', response.token);
             // dispatch own user data to redux
             await dispatch(getOwnUserDataThunk());
-            toggleLoading();
-        } catch (e) {
-            console.error(e);
-            toggleLoading();
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -69,7 +67,6 @@ const useAuthentication = () => {
         onRegister,
         onLogin,
         onLogout,
-        toggleLoading,
         userNamePasswordSchema,
     };
 };

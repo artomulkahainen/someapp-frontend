@@ -1,5 +1,6 @@
 import FullPageSpinner from '../components/common/FullPageSpinner';
 import Navigator from '../components/common/Navigator';
+import styles from '../components/common/styles/BaseView.module.scss';
 
 interface IBaseViewProps {
     children: JSX.Element | JSX.Element[];
@@ -8,7 +9,7 @@ interface IBaseViewProps {
 
 const BaseView = ({ children, loading }: IBaseViewProps) => {
     return (
-        <div>
+        <div className={styles.baseDiv}>
             {loading ? <FullPageSpinner /> : children}
             <Navigator />
         </div>

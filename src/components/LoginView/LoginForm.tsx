@@ -3,26 +3,17 @@ import useLoginView from '../../hooks/common/useAuthentication';
 import FormError from '../common/FormError';
 import GVButton from '../common/GVButton';
 import GVTextField from '../common/GVTextField';
-import { ILoginViewFormValues } from './loginView.interfaces';
 import styles from './styles/LoginView.module.scss';
 
 const LoginForm = () => {
     const { initialFormValues, loading, onLogin, userNamePasswordSchema } =
         useLoginView();
 
-    const onSubmit = async (values: ILoginViewFormValues) => {
-        try {
-            await onLogin(values);
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
     return (
         <Formik
             initialValues={initialFormValues}
             validationSchema={userNamePasswordSchema}
-            onSubmit={onSubmit}>
+            onSubmit={onLogin}>
             {({ errors, touched, values, handleChange }) => (
                 <Form className={styles.formDiv}>
                     <GVTextField

@@ -12,6 +12,7 @@ export interface PostDTO {
     createdDate?: string;
     post: string;
     userUuid: string;
+    username: string;
     postComments?: PostCommentDTO[];
     postLikerIds?: string[];
 }

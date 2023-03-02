@@ -1,0 +1,54 @@
+@import '../../../utils/styles/flexItems.scss';
+@import '../../../utils/styles/colors.scss';
+@import '../../../utils/styles/misc.scss';
+
+.mainDiv {
+    @extend .centeredFlexColumn;
+
+    width: 40em;
+    height: 25em;
+    background-color: $lightGrey;
+    margin: 2em 0em;
+    justify-content: space-between;
+
+    -webkit-box-shadow: 7px 6px 30px -10px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 7px 6px 30px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 7px 6px 30px -10px rgba(0, 0, 0, 0.75);
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 0px solid #000000;
+
+    @media (max-width: 768px) {
+        width: 25em;
+        height: 15em;
+    }
+}
+
+.smallText {
+    @extend .smallFont;
+
+    align-self: center;
+    margin-left: 1.5em;
+}
+
+.postHeader {
+    display: flex;
+}
+
+.postContent {
+    align-self: center;
+    margin: 1em 0em;
+    width: 80%;
+}
+
+.usernameText {
+    color: $mainRed;
+}
+
+.endingDiv {
+    width: 100%;
+    display: flex;
+    border-top: 2px solid #000000;
+    align-self: flex-end;
+}
