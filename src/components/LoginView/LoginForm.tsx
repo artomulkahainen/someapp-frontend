@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik';
-import useLoginView from '../../hooks/common/useAuthentication';
+import useAuthentication from '../../hooks/common/useAuthentication';
 import FormError from '../common/FormError';
 import GVButton from '../common/GVButton';
 import GVTextField from '../common/GVTextField';
@@ -7,7 +7,7 @@ import styles from './styles/LoginView.module.scss';
 
 const LoginForm = () => {
     const { initialFormValues, loading, onLogin, userNamePasswordSchema } =
-        useLoginView();
+        useAuthentication();
 
     return (
         <Formik

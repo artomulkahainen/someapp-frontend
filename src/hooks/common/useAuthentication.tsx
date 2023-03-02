@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { ILoginViewFormValues } from '../../components/LoginView/loginView.interfaces';
 import { loginUser, saveNewUser } from '../../services/userService';
+import { clearPosts } from '../../store/postsSlice';
 import { AppDispatch } from '../../store/store';
 import { clearUserData, getOwnUserDataThunk } from '../../store/userDataSlice';
 import useApiCall from './useApiCall';
@@ -54,6 +55,7 @@ const useAuthentication = () => {
 
     const destroyReduxStore = () => {
         dispatch(clearUserData());
+        dispatch(clearPosts());
     };
 
     const onLogout = () => {

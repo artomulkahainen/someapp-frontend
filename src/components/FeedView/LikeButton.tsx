@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { selectLoggedInUser } from '../../store/userDataSelector';
+import { selectLoggedInUser } from '../../store/selectors';
 import { Colors } from '../../utils/styles/colors';
 
 const StyledButton = styled(Button)`

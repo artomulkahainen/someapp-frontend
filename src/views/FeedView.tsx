@@ -1,33 +1,37 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Text from '../components/common/Text';
 import PostByUser from '../components/FeedView/PostByUser';
-import useBooleanState from '../hooks/common/useBooleanState';
-import { PostDTO } from '../services/api';
+import { getFriendsPosts } from '../store/postsSlice';
+import { selectPosts } from '../store/selectors';
+import { AppDispatch } from '../store/store';
 import BaseView from './BaseView';
 
 const FeedView = () => {
-    const [loading, toggleLoading] = useBooleanState();
+    const [loading, setLoading] = useState(false);
+    const dispatch: AppDispatch = useDispatch();
+    const { posts } = useSelector(selectPosts);
 
     useEffect(() => {
-        //toggleLoading();
+        (async () => {
+            setLoading(true);
+            try {
+                await dispatch(getFriendsPosts());
+            } catch (e) {
+                console.error(e);
+            }
 
-        if (loading) {
-            toggleLoading();
-        }
+            setLoading(false);
+        })();
     }, []);
-
-    const examplePost: PostDTO = {
-        uuid: '123as',
-        username: 'Arto',
-        post: 'Lorem ipsum upsum pumsun, halitum kalitum kalikalikaa.Lorem ipsum upsum pumsun, halitum kalitum kalikalikaa.Lorem ipsum upsum pumsun, halitum kalitum kalikalikaa.',
-        userUuid: '12433536',
-        createdDate: '2021-10-10',
-    };
 
     return (
         <BaseView loading={loading}>
-            <PostByUser post={examplePost} />
-            <PostByUser post={examplePost} />
-            <PostByUser post={examplePost} />
+            {posts.length > 0 ? (
+                posts.map((post) => <PostByUser post={post} />)
+            ) : (
+                <Text>No posts found!</Text>
+            )}
         </BaseView>
     );
 };

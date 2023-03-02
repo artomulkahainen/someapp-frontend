@@ -4,9 +4,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 
 import userDataReducer from './userDataSlice';
+import postsReducer from './postsSlice';
 
 const reducer = combineReducers({
     userData: userDataReducer,
+    posts: postsReducer,
 });
 
 export const store = configureStore({

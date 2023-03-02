@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { selectLoggedInUser } from './store/userDataSelector';
+import { selectLoggedInUser } from './store/selectors';
 import { RoutePaths } from './utils/enums';
 import FeedView from './views/FeedView';
 import LoginView from './views/LoginView';
