@@ -7,6 +7,5 @@
  */
 
 export interface LikePostRequest {
-    postUserId: string;
     postId: string;
 }

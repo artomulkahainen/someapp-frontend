@@ -10,4 +10,5 @@ export interface PostLikeDTO {
     uuid: string;
     createdDate?: string;
     postId: string;
+    likerId: string;
 }

@@ -1,7 +1,9 @@
 import { Button } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { selectLoggedInUser } from '../../store/selectors';
+import { likePostThunk, unlikePostThunk } from '../../store/postsSlice';
+import { AppDispatch } from '../../store/store';
 import { Colors } from '../../utils/styles/colors';
 
 const StyledButton = styled(Button)`
@@ -16,19 +18,31 @@ const StyledButton = styled(Button)`
 `;
 
 interface ILikeButtonProps {
+    isLikedByLoggedInUser: boolean;
     likesCount: number;
-    onClick: () => Promise<void>;
     postId: string;
 }
 
-const LikeButton = ({ likesCount, onClick, postId }: ILikeButtonProps) => {
-    const { likedPostsIds } = useSelector(selectLoggedInUser);
+const LikeButton = ({
+    likesCount,
+    isLikedByLoggedInUser,
+    postId,
+}: ILikeButtonProps) => {
+    const dispatch: AppDispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
 
+    const likeOrUnlikePost = async () => {
+        setLoading(true);
+        if (isLikedByLoggedInUser) {
+            await dispatch(unlikePostThunk({ postId }));
+        } else {
+            await dispatch(likePostThunk({ postId }));
+        }
+        setLoading(false);
+    };
     return (
-        <StyledButton onClick={onClick}>{`${
-            likedPostsIds?.some((dto) => dto.postId === postId)
-                ? 'Unlike'
-                : 'Like'
+        <StyledButton disabled={loading} onClick={likeOrUnlikePost}>{`${
+            isLikedByLoggedInUser ? 'Unlike' : 'Like'
         } (${likesCount})`}</StyledButton>
     );
 };

@@ -9,4 +9,5 @@
 export interface DeleteResponse {
     message?: string;
     id: string;
+    actionUserId: string;
 }

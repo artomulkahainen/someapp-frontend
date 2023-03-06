@@ -7,5 +7,5 @@
  */
 
 export interface UnlikePostRequest {
-    uuid: string;
+    postId: string;
 }

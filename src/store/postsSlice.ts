@@ -1,20 +1,25 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { LikePostRequest } from '../services/api';
-import { getPostsByRelationships, likePost } from '../services/postService';
+import { LikePostRequest, UnlikePostRequest } from '../services/api';
+import {
+    getPostsByRelationships,
+    likePost,
+    unlikePost,
+} from '../services/postService';
 import { IPostsState } from './storeStates.interfaces';
 
 export const getFriendsPosts = createAsyncThunk(
     'posts/getFriendsPosts',
-    async () => {
-        return await getPostsByRelationships();
-    },
+    async () => await getPostsByRelationships(),
 );
 
 export const likePostThunk = createAsyncThunk(
     'posts/likePost',
-    async (request: LikePostRequest) => {
-        return await likePost(request);
-    },
+    async (request: LikePostRequest) => await likePost(request),
+);
+
+export const unlikePostThunk = createAsyncThunk(
+    'posts/unlikePost',
+    async (request: UnlikePostRequest) => await unlikePost(request),
 );
 
 const initialState = {
@@ -36,7 +41,22 @@ const postsSlice = createSlice({
         builder.addCase(likePostThunk.fulfilled, (state, action) => {
             state.posts
                 .find((post) => post.uuid === action.payload.postId)
-                ?.postLikerIds?.push('new');
+                ?.postLikerIds?.push(action.payload.likerId);
+        });
+        builder.addCase(unlikePostThunk.fulfilled, (state, action) => {
+            const postToEdit = state.posts.find(
+                (post) => post.uuid === action.payload.id,
+            );
+
+            if (postToEdit) {
+                const newObj = { ...postToEdit };
+                newObj.postLikerIds = postToEdit.postLikerIds?.filter(
+                    (likerId) => likerId !== action.payload.actionUserId,
+                );
+                state.posts = state.posts.map((post) =>
+                    post.uuid === postToEdit.uuid ? newObj : post,
+                );
+            }
         });
     },
 });

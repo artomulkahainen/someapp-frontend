@@ -1,4 +1,6 @@
+import { useSelector } from 'react-redux';
 import { PostDTO } from '../../services/api';
+import { selectLoggedInUser } from '../../store/selectors';
 import Text from '../common/Text';
 import CommentButton from './CommentButton';
 import LikeButton from './LikeButton';
@@ -6,10 +8,12 @@ import LikeButton from './LikeButton';
 import styles from './styles/PostByUser.module.scss';
 
 interface IPostByUser {
+    openPostCommentDialog: (id: string) => void;
     post: PostDTO;
 }
 
-const PostByUser = ({ post }: IPostByUser) => {
+const PostByUser = ({ openPostCommentDialog, post }: IPostByUser) => {
+    const { uuid } = useSelector(selectLoggedInUser);
     return (
         <div className={styles.mainDiv}>
             <div className={styles.postHeader}>
@@ -23,12 +27,14 @@ const PostByUser = ({ post }: IPostByUser) => {
             <Text className={styles.postContent}>{post.post}</Text>
             <div className={styles.endingDiv}>
                 <CommentButton
-                    commentsCount={0}
-                    onClick={() => console.log('moi')}
+                    commentsCount={post.postComments?.length || 0}
+                    onClick={() => openPostCommentDialog(post.uuid)}
                 />
                 <LikeButton
-                    likesCount={0}
-                    onClick={() => Promise.resolve()}
+                    isLikedByLoggedInUser={
+                        post.postLikerIds?.includes(uuid) || false
+                    }
+                    likesCount={post.postLikerIds?.length || 0}
                     postId={post.uuid}
                 />
             </div>
