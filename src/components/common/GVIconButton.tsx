@@ -4,6 +4,7 @@ import styled from 'styled-components';
 interface IGVIconButtonProps {
     children: JSX.Element;
     onClick: () => void;
+    className?: string;
 }
 
 const StyledButton = styled(IconButton)`
@@ -13,8 +14,12 @@ const StyledButton = styled(IconButton)`
     align-self: center;
 `;
 
-const GVIconButton = ({ children, onClick }: IGVIconButtonProps) => {
-    return <StyledButton onClick={onClick}>{children}</StyledButton>;
+const GVIconButton = ({ children, onClick, className }: IGVIconButtonProps) => {
+    return (
+        <StyledButton className={className} onClick={onClick}>
+            {children}
+        </StyledButton>
+    );
 };
 
 export default GVIconButton;

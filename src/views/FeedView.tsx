@@ -11,7 +11,7 @@ import BaseView from './BaseView';
 const FeedView = () => {
     const [loading, setLoading] = useState(false);
     const dispatch: AppDispatch = useDispatch();
-    const [postCommentDialogId, setPostCommentDialogId] = useState<string>();
+    const [postId, setPostId] = useState<string>();
     const { posts } = useSelector(selectPosts);
 
     useEffect(() => {
@@ -27,26 +27,25 @@ const FeedView = () => {
         })();
     }, []);
 
-    const openPostCommentDialog = (id: string) => setPostCommentDialogId(id);
+    const closePostCommentDialog = () => setPostId(undefined);
 
     return (
         <BaseView loading={loading}>
-            <>
-                {posts.length > 0 ? (
-                    posts.map((post) => (
-                        <PostByUser
-                            post={post}
-                            openPostCommentDialog={openPostCommentDialog}
-                        />
-                    ))
-                ) : (
-                    <Text>No posts found!</Text>
-                )}
-                <PostCommentDialog
-                    onClose={() => setPostCommentDialogId(undefined)}
-                    id={postCommentDialogId}
-                />
-            </>
+            {posts.length > 0 ? (
+                posts.map((post) => (
+                    <PostByUser
+                        key={post.uuid}
+                        post={post}
+                        openPostCommentDialog={setPostId}
+                    />
+                ))
+            ) : (
+                <Text>No posts found!</Text>
+            )}
+            <PostCommentDialog
+                onClose={closePostCommentDialog}
+                postId={postId}
+            />
         </BaseView>
     );
 };

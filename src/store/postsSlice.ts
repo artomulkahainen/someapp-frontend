@@ -1,8 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { LikePostRequest, UnlikePostRequest } from '../services/api';
 import {
+    LikePostRequest,
+    PostCommentDeleteDTO,
+    PostCommentSaveDTO,
+    UnlikePostRequest,
+} from '../services/api';
+import {
+    deletePostComment,
     getPostsByRelationships,
     likePost,
+    sendPostComment,
     unlikePost,
 } from '../services/postService';
 import { IPostsState } from './storeStates.interfaces';
@@ -20,6 +27,16 @@ export const likePostThunk = createAsyncThunk(
 export const unlikePostThunk = createAsyncThunk(
     'posts/unlikePost',
     async (request: UnlikePostRequest) => await unlikePost(request),
+);
+
+export const sendPostCommentThunk = createAsyncThunk(
+    'posts/sendPostComment',
+    async (request: PostCommentSaveDTO) => await sendPostComment(request),
+);
+
+export const deletePostCommentThunk = createAsyncThunk(
+    'posts/deletePostComment',
+    async (request: PostCommentDeleteDTO) => await deletePostComment(request),
 );
 
 const initialState = {
@@ -52,6 +69,28 @@ const postsSlice = createSlice({
                 const newObj = { ...postToEdit };
                 newObj.postLikerIds = postToEdit.postLikerIds?.filter(
                     (likerId) => likerId !== action.payload.actionUserId,
+                );
+                state.posts = state.posts.map((post) =>
+                    post.uuid === postToEdit.uuid ? newObj : post,
+                );
+            }
+        });
+        builder.addCase(sendPostCommentThunk.fulfilled, (state, action) => {
+            state.posts
+                .find((post) => post.uuid === action.payload.postId)
+                ?.postComments?.push(action.payload);
+        });
+        builder.addCase(deletePostCommentThunk.fulfilled, (state, action) => {
+            const postToEdit = state.posts.find((post) =>
+                post.postComments?.some(
+                    (comment) => comment.uuid === action.payload.id,
+                ),
+            );
+
+            if (postToEdit) {
+                const newObj = { ...postToEdit };
+                newObj.postComments = postToEdit.postComments?.filter(
+                    (comment) => comment.uuid !== action.payload.id,
                 );
                 state.posts = state.posts.map((post) =>
                     post.uuid === postToEdit.uuid ? newObj : post,

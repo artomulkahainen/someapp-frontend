@@ -1,6 +1,9 @@
 import {
     DeleteResponse,
     LikePostRequest,
+    PostCommentDeleteDTO,
+    PostCommentDTO,
+    PostCommentSaveDTO,
     PostDTO,
     PostLikeDTO,
     UnlikePostRequest,
@@ -30,6 +33,28 @@ export const unlikePost = async (request: UnlikePostRequest) => {
     try {
         return await post<DeleteResponse, UnlikePostRequest>(
             '/unlikePostByUsingPOST',
+            request,
+        );
+    } catch (e) {
+        throw new Error((e as Error).message);
+    }
+};
+
+export const sendPostComment = async (request: PostCommentSaveDTO) => {
+    try {
+        return await post<PostCommentDTO, PostCommentSaveDTO>(
+            '/sendPostCommentByUsingPOST',
+            request,
+        );
+    } catch (e) {
+        throw new Error((e as Error).message);
+    }
+};
+
+export const deletePostComment = async (request: PostCommentDeleteDTO) => {
+    try {
+        return await post<DeleteResponse, PostCommentDeleteDTO>(
+            '/deletePostCommentByUsingPOST',
             request,
         );
     } catch (e) {

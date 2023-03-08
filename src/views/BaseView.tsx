@@ -3,7 +3,7 @@ import Navigator from '../components/common/Navigator';
 import styles from '../components/common/styles/BaseView.module.scss';
 
 interface IBaseViewProps {
-    children: JSX.Element | JSX.Element[];
+    children: React.ReactNode;
     loading?: boolean;
 }
 

@@ -1,0 +1,41 @@
+@import '../../../utils/styles/colors.scss';
+
+.commentSendingDiv {
+    display: flex;
+    gap: 1em;
+
+    @media (max-width: 500px) {
+        flex-direction: column;
+    }
+}
+
+.dialogDiv {
+    padding: 1em;
+}
+
+.commentInput {
+    width: 30em;
+
+    @media (max-width: 768px) {
+        width: 20em;
+    }
+
+    @media (max-width: 500px) {
+        width: 15em;
+    }
+}
+
+.existingCommentDiv {
+    display: flex;
+    flex-direction: column;
+    margin: 1em 0em;
+}
+
+.existingCommentHeader {
+    color: $mainRed;
+}
+
+.existingCommentTextHeaderDiv {
+    display: flex;
+    justify-content: space-between;
+}
